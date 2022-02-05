@@ -1,0 +1,32 @@
+---
+title: "Introduction to sf and raster"
+author: "Shane Dewees"
+date: "2/4/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(tidyverse)
+library(sf)
+library(raster)
+library(leaflet)
+```
+
+```{r}
+plots <- st_read(here("data", "sample_plots.shp")) %>% 
+  st_transform(crs = 4326)
+
+sb_county <- st_read(here("data", "sb_county.shp")) %>% 
+  st_transform(crs = 4326)
+```
+
+
+```{r}
+leaflet() %>% 
+  addPolygons(data = sb_county) %>% 
+  addMarkers(data = plots) %>% 
+  addTiles()
+```
+
